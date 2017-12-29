@@ -1,2 +1,2 @@
 # GenericDao
-Lib For Data access object in PDO PHP
+Lib For Data Access Object in PDO PHP
