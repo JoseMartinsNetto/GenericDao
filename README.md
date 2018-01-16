@@ -32,9 +32,9 @@ Dessa forma, para se instanciar a classe, ficaria dessa forma:
 
 ###2 -  Métodos de persistencia
 
-[Obtendo itens](docs/obtendo-itens.md)
-[Atualizando dados](docs/atualizando-itens.md)
-[Deletando dados](docs/deletando-itens.md)
+[Obtendo itens](docs/obtendo-itens.md)  
+[Atualizando dados](docs/atualizando-itens.md)  
+[Deletando dados](docs/deletando-itens.md)  
 
 
 **RESTANTE DA DOCUMENTAÇÃO AINDA EM PRODUÇÃO...**
