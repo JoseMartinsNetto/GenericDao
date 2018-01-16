@@ -30,7 +30,7 @@ Dessa forma, para se instanciar a classe, ficaria dessa forma:
 
 	$myDb = new GenericDao('myTable', 'myPkName', 'myAnotherDb');
 
-###2 -  Métodos de persistencia
+### 2 -  Métodos de persistencia
 
 [Obtendo itens](docs/obtendo-itens.md)  
 [Atualizando dados](docs/atualizando-itens.md)  
