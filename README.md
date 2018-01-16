@@ -23,16 +23,18 @@ passando como argumento obrigatório a tabela em que irá ter acesso no momento:
 
 	$myDb = new GenericDao('myTable');
 
-O construtor também conta com mais dois parametros opcionais que são $pkName(primary Key da tabela) e $dbName nome da base de dados caso trabalhe com mais de um banco de dados com a mesma conexão.
-**CASO SE ESSES PARÂMETROS NÃO FOREM INFORMADOS SERÁ USADO COMO PADRÃO PARA $pkName o valor 'id' E PARA O $dbName O VALOR $dbConfig['dbName'] = 'MyDbNameExemple' DEFINIDO NO ARQUIVO DE CONFIGURAÇÃO config.genericDao.php.**
+O construtor também conta com mais dois parametros opcionais que são $pkName(primary Key da tabela) e $dbName nome da base de dados caso trabalhe com mais de um banco de dados com a mesma conexão.  
+**CASO ESSES PARÂMETROS NÃO FOREM INFORMADOS NA CONSTRUÇÃO DA CLASSE, SERÁ USADO COMO PADRÃO PARA $pkName o valor 'id' E PARA O $dbName O VALOR $dbConfig['dbName'] = 'MyDbNameExemple' DEFINIDO NO ARQUIVO DE CONFIGURAÇÃO EM: config.genericDao.php.**
 
 Dessa forma, para se instanciar a classe, ficaria dessa forma:
 
 	$myDb = new GenericDao('myTable', 'myPkName', 'myAnotherDb');
 
+_Veja Também:_  
+ 
 ### 2 -  Métodos de persistencia
 
-[Obtendo itens](docs/obtendo-itens.md)  
+[Obtendo dados](docs/obtendo-itens.md)  
 [Atualizando dados](docs/atualizando-itens.md)  
 [Deletando dados](docs/deletando-itens.md)  
 
