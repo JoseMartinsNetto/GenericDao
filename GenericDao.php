@@ -1,109 +1,89 @@
 <?php
-class GenericDao
+require_once 'config.genericDao.php';
+
+final class GenericDao
 {
     private $db;
     private $tableInUse;
-    private $dbName;
+    private $pkName;
     private $dsn;
-    private $dbUser;
-    private $dbPass;
-    private $dbDefaltName;
-    private $dbHasError;
-    private $msgsDB;
     private $lastQuery;
     private $dbConfig;
 
-    public function __construct(string $tableInUse, string $dbName = '')
+    public function __construct(string $tableInUse, string $pkName = 'id', string $dbName = '')
     {
         global $dbConfig;
+        self::verifyConnection($dbConfig, 'GenericDao->__construct()');
         $this->dbConfig = $dbConfig;
         $this->tableInUse = $tableInUse;
-        $this->dbDefaltName = $this->dbConfig['dbName'];
-        $this->dbHasError = 'no';
-        $this->msgsDB = array();
+        $this->pkName = $pkName;
 
         if (!empty($dbName)) {
-            $this->dbName = $dbName;
-        } else {
-            $this->dbName = $this->dbDefaltName;
+            $this->dbConfig['dbName'] = $dbName;
         }
 
-        $this->dsn = 'mysql:host=' . $this->dbConfig['dbHost'] . ';dbname=' . $this->dbName;
-        $this->dbUser = $this->dbConfig['dbUser'];
-        $this->dbPass = $this->dbConfig['dbPass'];
-
-        $this->addMsgDB("O nome da base de dados é: " . $this->dbName);
+        $this->dsn = 'mysql:host=' . $this->dbConfig['dbHost'] . ';dbname=' . $this->dbConfig['dbName'];
 
         try {
-            $this->db = new PDO($this->dsn, $this->dbUser, $this->dbPass);
+            $this->db = new PDO($this->dsn, $this->dbConfig['dbUser'], $this->dbConfig['dbPass']);
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $this->addMsgDB('Base de dados funcionando');
         } catch (PDOException $e) {
-            $this->dbHasError = 'yes';
-
-            $this->addMsgDB("Não foi possivel conectar a base de dados, Erro: " . $e);
-            exit;
-            die();
+            exit("Não foi possivel conectar a base de dados, Erro: " . $e);
         }
     }
 
-    private function addMsgDB(string $msg) : void
+    private static function verifyConnection(array $dbConection, string $font): void
     {
-        array_push($this->msgsDB, $msg);
-    }
-
-    public function showMsgDb(string $isShowMsgDb = 'no') : void
-    {
-        $prefix = "Msg de DAOSuperClass :>> ";
-
-        if ($isShowMsgDb === 'yes' && $this->dbHasError = 'no') {
-            foreach ($this->msgsDB as $msg) {
-                echo "<pre>" . $prefix . $msg . "!</pre>";
-            }
+        $font = "*!* ".$font." *!*";
+        if (!isset($dbConection['dbHost']) && empty($dbConection['dbHost']) || $dbConection['dbHost']=="********") {
+            exit("Erro ao verificar conexão! Fonte: ".$font." Msg:>> Você deve informar corretamente o nome da base de dados chave = { dbHost } e valor correspondente!");
         }
 
-        if ($this->dbHasError === 'yes') {
-            echo "<pre>" . $prefix . $msg . "!</pre>";
+        if (!isset($dbConection['dbName']) && empty($dbConection['dbName']) || $dbConection['dbName']=="********") {
+            exit("Erro ao verificar conexão! Fonte: ".$font." Msg:>> Você deve informar corretamente o nome da base de dados chave = { dbName } e valor correspondente!");
+        }
+
+        if (!isset($dbConection['dbUser']) && empty($dbConection['dbUser']) || $dbConection['dbUser']=="********") {
+            exit("Erro ao verificar conexão! Fonte: ".$font." Msg:>> Você deve informar corretamente o usuário da base de dados chave = { dbUser } e valor correspondente!");
+        }
+
+        if (!isset($dbConection['dbPass']) && empty($dbConection['dbPass']) || $dbConection['dbPass']=="********") {
+            exit("Erro ao verificar conexão! Fonte: ".$font." Msg:>> Você deve informar corretamente a senha da base de dados chave = { dbPass } e valor correspondente!");
         }
     }
 
-    public function getItem(int $id) : array
+    public function getItem(int $primaryKeyValue): array
     {
         $item = array();
-        $sql = "SELECT * FROM $this->tableInUse WHERE id = $id";
+        $sql = "SELECT * FROM $this->tableInUse WHERE $this->pkName = $primaryKeyValue";
 
         $this->lastQuery = $sql;
         $sql = $this->db->query($sql);
 
         if ($sql->rowCount() > 0) {
             $item = $sql->fetch();
-            $this->addMsgDB("DADOS OBTIDOS de item da tabela: " . $this->tableInUse);
-        } else {
-            $this->addMsgDB("NENHUM DADO OBTIDO de item da tabela: " . $this->tableInUse);
         }
 
         return $item;
     }
 
-    public function getItems() : array
+    public function getItems(): array
     {
         $items = array();
         $sql = "SELECT * FROM $this->tableInUse";
 
+        $this->lastQuery = $sql;
         $sql = $this->db->query($sql);
 
         if ($sql->rowCount() > 0) {
             $items = $sql->fetchAll();
-            $this->addMsgDB('FORAM encontrados no total de ' . $sql->rowCount() . ' registro(s) na tabela ' . $this->tableInUse);
-        } else {
-            $this->addMsgDB('NÃO FORAM encontrados registros na tabela ' . $this->tableInUse);
         }
 
         return $items;
     }
 
-    public function getItemsLike(string $search, array $filds) : array
+    public function getItemsLike(string $search, array $filds): array
     {
 
         $sql = "SELECT * FROM $this->tableInUse WHERE ";
@@ -125,7 +105,7 @@ class GenericDao
         return $item;
     }
 
-    public function addItem(array $item) : void
+    public function addItem(array $item): void
     {
         $sql = "INSERT INTO $this->tableInUse SET";
         $data = array();
@@ -138,14 +118,13 @@ class GenericDao
 
         $this->lastQuery = $sql;
         $this->db->query($sql);
-        $this->addMsgDB("DADOS de item ADICIONADOS na tabela: " . $this->tableInUse);
     }
 
-    public function updateItem(array $item) : void
+    public function updateItem(array $item): void
     {
-        $id = $item['id'];
+        $primaryKeyValue = $item[$this->pkName];
 
-        unset($item['id']);
+        unset($item[$this->pkName]);
 
         $sql = "UPDATE $this->tableInUse SET";
         $data = array();
@@ -162,23 +141,21 @@ class GenericDao
 
         $sql = $sql . implode(',', $data);
 
-        $sql = $sql . " WHERE id = " . $id;
+        $sql = $sql . " WHERE $this->pkName = " . $primaryKeyValue;
 
         $this->lastQuery = $sql;
         $this->db->query($sql);
-        $this->addMsgDB("DADOS de item ALTERADOS na tabela: " . $this->tableInUse);
     }
 
-    public function removeItem(string $id) : void
+    public function removeItem(string $primaryKeyValue): void
     {
-        $sql = "DELETE FROM $this->tableInUse WHERE id = $id";
+        $sql = "DELETE FROM $this->tableInUse WHERE $this->pkName = $primaryKeyValue";
 
         $this->lastQuery = $sql;
         $this->db->query($sql);
-        $this->addMsgDB("DADOS de item REMOVIDOS DAS tabela: " . $this->tableInUse);
     }
 
-    public function getNextId() : string
+    public function getNextId(): string
     {
         $sql = "SHOW TABLE STATUS LIKE '$this->tableInUse'";
 
@@ -192,65 +169,25 @@ class GenericDao
         }
     }
 
-    public function getLastQuery() : string
+    public function getLastQuery(): string
     {
         return $this->lastQuery;
     }
 
-    public static function query(array $dbConection, string $query) : array
+    public static function query(array $dbConection, string $query): array
     {
-        if (isset($dbConection['dbHost']) && !empty($dbConection['dbHost'])) {
-            $dbHost = $dbConection['dbHost'];
-        }else{
-            echo "Você deve informar corretamente o nome da base de dados chave = { dbHost } e valor correspondente!";
-            exit;
-            die();
-        }
+        self::verifyConnection($dbConection, 'Método estático GenericDao::query(array $dbConection, string $query)');
 
-        if (isset($dbConection['dbName']) && !empty($dbConection['dbName'])) {
-            $dbName = $dbConection['dbName'];
-        } else {
-            echo "Você deve informar corretamente o nome da base de dados chave = { dbName } e valor correspondente!";
-            exit;
-            die();
-        }
-
-        if (isset($dbConection['dbUser']) && !empty($dbConection['dbUser'])) {
-            $dbUser = $dbConection['dbUser'];
-        } else {
-            echo "Você deve informar corretamente o usuário da base de dados chave = { dbUser } e valor correspondente!";
-            exit;
-            die();
-        }
-
-        if (isset($dbConection['dbPass'])) {
-            $dbPass = $dbConection['dbPass'];
-        } else {
-            echo "Você deve informar corretamente a senha da base de dados chave = { dbPass } e valor correspondente!";
-            exit;
-            die();
-        }
-
-        if (empty($query)) {
-            echo "Você deve informar corretamente a sua query, no 2º parâmetro! deste método foda!";
-            exit;
-            die();
-        }
-
-        $dsn = "mysql:host=".$dbConection['dbHost'].";dbname=" . $dbName;
+        $dsn = "mysql:host=" . $dbConection['dbHost'] . ";dbname=" . $dbConection['dbName'];
 
         try {
-            $db = new PDO($dsn, $dbUser, $dbPass);
+            $db = new PDO($dsn, $dbConection['dbUser'], $dbConection['dbPass']);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            echo "Erro no momento da conexão usado método estático (makeTable), Causa:>> " . $e;
-            exit;
-            die();
+            exit("Erro no momento da conexão usado método estático (makeTable), Causa:>> " . $e);
         }
 
         $result = array();
-
-        $query = $query;
 
         $query = $db->query($query);
 
