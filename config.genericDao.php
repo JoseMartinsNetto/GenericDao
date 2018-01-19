@@ -3,7 +3,7 @@
 global $dbConfig;
 $dbConfig = array();
 
-$dbConfig['dbName'] = '********';
-$dbConfig['dbHost'] = '********';
-$dbConfig['dbUser'] = '********';
-$dbConfig['dbPass'] = '********';
+$dbConfig['dbName'] = 'mytestdb';
+$dbConfig['dbHost'] = 'localhost';
+$dbConfig['dbUser'] = 'root';
+$dbConfig['dbPass'] = '';
