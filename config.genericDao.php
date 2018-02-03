@@ -4,6 +4,6 @@ global $dbConfig;
 $dbConfig = array();
 
 $dbConfig['dbName'] = 'mytestdb';
-$dbConfig['dbHost'] = 'localhost';
+$dbConfig['dbHosdt'] = 'localhost';
 $dbConfig['dbUser'] = 'root';
 $dbConfig['dbPass'] = '';

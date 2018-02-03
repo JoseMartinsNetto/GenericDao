@@ -1,5 +1,4 @@
 <?php
-require_once 'config.genericDao.php';
 
 final class GenericDao
 {
