@@ -4,9 +4,9 @@ namespace GenericDaoLib;
 
 abstract class DBConfig
 {
-    const DBType = 'mysql';
-    const DBName = 'myTestDb';
-    const DBHost = 'localhost';
-    const DBUser = 'root';
-    const DBPass = '';
+    const DB_TYPE = 'mysql';
+    const DB_NAME = 'myTest9Db';
+    const DB_HOST = 'localhost';
+    const DB_USER = 'root';
+    const DB_PASS = '';
 }

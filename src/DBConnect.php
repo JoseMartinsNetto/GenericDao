@@ -7,16 +7,16 @@ use PDO;
 class DBConnect implements IDBConnect
 {
     private static $db;
-    private const Dsn = DBConfig::DBType .':host=' . DBConfig::DBHost . ';dbname=' . DBConfig::DBName;
+    private const DSN = DBConfig::DB_TYPE .':host=' . DBConfig::DB_HOST . ';dbname=' . DBConfig::DB_NAME;
 
     static function Connect()
     {
         try {
-            self::$db = new PDO(self::Dsn, DBConfig::DBUser,  DBConfig::DBPass);
+			self::$db = new PDO(self::DSN, DBConfig::DB_USER,  DBConfig::DB_PASS);
             self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return self::$db;
-        } catch (PDOExeption $error) {
-            exit('Error to connect to DataBase: Error returned:>>' . $error);
+        } catch (Throwable $error) {
+            exit('Error to connect to DataBase: Error returned:>>' . $error->getMessage());
         }
 
     }
