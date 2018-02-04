@@ -20,7 +20,7 @@ final class GenericDao implements IGenericDao
 
         $this->lastQuery = $sql;
 
-        $sql = DBconnect::Connect()->query($sql);
+        $sql = DBconnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
             $item = $sql->fetch();
@@ -36,7 +36,7 @@ final class GenericDao implements IGenericDao
 
         $this->lastQuery = $sql;
 
-        $sql = DBconnect::Connect()->query($sql);
+        $sql = DBconnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
             $items = $sql->fetchAll();
@@ -58,7 +58,7 @@ final class GenericDao implements IGenericDao
         $sql = $sql . implode(' OR ', $data);
 
         $this->lastQuery = $sql;
-        $sql = DBconnect::Connect()->query($sql);
+        $sql = DBconnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
             $item = $sql->fetchAll();
@@ -79,7 +79,7 @@ final class GenericDao implements IGenericDao
         $sql = $sql . implode(',', $data);
 
         $this->lastQuery = $sql;
-        DBconnect::Connect()->query($sql);
+        DBconnect::getConnection()->query($sql);
     }
 
     public function updateItem(array $item): void
@@ -106,7 +106,7 @@ final class GenericDao implements IGenericDao
         $sql = $sql . " WHERE $this->primaryKeyName = " . $primaryKeyValue;
 
         $this->lastQuery = $sql;
-        DBconnect::Connect()->query($sql);
+        DBconnect::getConnection()->query($sql);
     }
 
     public function removeItem($primaryKeyValue): void
@@ -114,7 +114,7 @@ final class GenericDao implements IGenericDao
         $sql = "DELETE FROM $this->tableInUse WHERE $this->primaryKeyName = $primaryKeyValue";
 
         $this->lastQuery = $sql;
-        DBconnect::Connect()->query($sql);
+        DBconnect::getConnection()->query($sql);
     }
 
     public function getNextId(): string
@@ -122,7 +122,7 @@ final class GenericDao implements IGenericDao
         $sql = "SHOW TABLE STATUS LIKE '$this->tableInUse'";
 
         $this->lastQuery = $sql;
-        $sql = DBconnect::Connect()->query($sql);
+        $sql = DBconnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
             $nextId = $sql->fetch();
@@ -141,7 +141,7 @@ final class GenericDao implements IGenericDao
         $result = array();
 
         $this->lastQuery = $query;
-        $query = DBconnect::Connect()->query($query);
+        $query = DBconnect::getConnection()->query($query);
 
         if ($query->rowCount() > 0) {
             $result = $query->fetchAll();
