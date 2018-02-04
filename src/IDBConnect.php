@@ -1,5 +1,5 @@
 <?php
-namespace GenericDao;
+namespace GenericDaoLib;
 
 interface IDBConnect{
     static function Connect();

@@ -6,7 +6,7 @@
 
 require __DIR__. '/vendor/autoload.php';
 
-use GenericDao\GenericDao as DBExmpleDao;
+use GenericDaoLib\GenericDao as DBExmpleDao;
 
 $exempleDao = new DBExmpleDao('tests');
 

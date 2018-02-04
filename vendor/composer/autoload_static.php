@@ -9,12 +9,12 @@ class ComposerStaticInitea1249c7fab8ec80bad666b60c252bda
     public static $prefixLengthsPsr4 = array (
         'G' => 
         array (
-            'GenericDao\\' => 11,
+            'GenericDaoLib\\' => 14,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'GenericDao\\' => 
+        'GenericDaoLib\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

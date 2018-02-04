@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'GenericDao\\' => array($baseDir . '/src'),
+    'GenericDaoLib\\' => array($baseDir . '/src'),
 );

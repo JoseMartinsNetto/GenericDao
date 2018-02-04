@@ -1,5 +1,5 @@
 <?php
-namespace GenericDao;
+namespace GenericDaoLib;
 
 final class GenericDao implements IGenericDao
 {

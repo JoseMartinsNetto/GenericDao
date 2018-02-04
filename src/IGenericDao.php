@@ -1,5 +1,5 @@
 <?php
-namespace GenericDao;
+namespace GenericDaoLib;
 
 interface IGenericDao
 {
