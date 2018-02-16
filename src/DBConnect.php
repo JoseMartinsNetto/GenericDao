@@ -1,6 +1,8 @@
 <?php
-
 namespace GenericDaoLib;
+
+require 'IDBConnect.php';
+require 'DBConfig.php';
 
 use PDO;
 

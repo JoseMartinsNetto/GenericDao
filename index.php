@@ -4,7 +4,7 @@
 * run as command line for test this library
 */
 
-require __DIR__. '/vendor/autoload.php';
+require 'src/GenericDao.php';
 
 use GenericDaoLib\GenericDao as DBExmpleDao;
 

@@ -1,6 +1,9 @@
 <?php
 namespace GenericDaoLib;
 
+require 'IGenericDao.php';
+require 'DBconnect.php';
+
 final class GenericDao implements IGenericDao
 {
     private $tableInUse;
