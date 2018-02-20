@@ -1,5 +1,4 @@
 <?php
-
 namespace GenericDaoLib;
 
 abstract class DBConfig
