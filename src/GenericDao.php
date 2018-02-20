@@ -73,7 +73,11 @@ final class GenericDao implements IGenericDao
         $data = array();
 
         foreach ($item as $key => $value) {
-            $data[] = " " . $key . " = '" . $value . "'";
+            if (is_string($value)) {
+                $data[] = " " . $key . " = '" . $value . "'";
+            } else {
+                $data[] = " " . $key . " = " . $value . " ";
+            }
         }
 
         $sql = $sql . implode(',', $data);
