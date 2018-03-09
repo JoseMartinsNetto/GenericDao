@@ -1,11 +1,16 @@
 <?php
-namespace MVC\Models\GenericDaoLib;
+namespace GenericDaoLib;
+
+use PDO;
+
+require 'IGenericDao.php';
+require 'DBConnect.php';
 
 final class GenericDao implements IGenericDao
 {
     private $tableInUse;
     private $primaryKeyName;
-    private $lastQuery;
+    private static $lastQuery;
 
     public function __construct(string $tableInUse, string $primaryKeyName = 'id')
     {
@@ -18,12 +23,12 @@ final class GenericDao implements IGenericDao
         $item = array();
         $sql = "SELECT * FROM $this->tableInUse WHERE $this->primaryKeyName = $primaryKeyValue";
 
-        $this->lastQuery = $sql;
+        self::$lastQuery = $sql;
 
         $sql = DBConnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
-            $item = $sql->fetch();
+            $item = $sql->fetch(PDO::FETCH_ASSOC);
         }
 
         return $item;
@@ -34,12 +39,12 @@ final class GenericDao implements IGenericDao
         $items = array();
         $sql = "SELECT * FROM $this->tableInUse";
 
-        $this->lastQuery = $sql;
+        self::$lastQuery = $sql;
 
         $sql = DBConnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
-            $items = $sql->fetchAll();
+            $items = $sql->fetchAll(PDO::FETCH_ASSOC);
         }
 
         return $items;
@@ -57,11 +62,11 @@ final class GenericDao implements IGenericDao
 
         $sql = $sql . implode(' OR ', $data);
 
-        $this->lastQuery = $sql;
+        self::$lastQuery = $sql;
         $sql = DBConnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
-            $item = $sql->fetchAll();
+            $item = $sql->fetchAll(PDO::FETCH_ASSOC);
         }
 
         return $item;
@@ -84,7 +89,7 @@ final class GenericDao implements IGenericDao
 
         $sql = $sql . implode(',', $data);
 
-        $this->lastQuery = $sql;
+        self::$lastQuery = $sql;
         DBConnect::getConnection()->query($sql);
     }
 
@@ -111,7 +116,7 @@ final class GenericDao implements IGenericDao
 
         $sql = $sql . " WHERE $this->primaryKeyName = " . $primaryKeyValue;
 
-        $this->lastQuery = $sql;
+        self::$lastQuery = $sql;
         DBConnect::getConnection()->query($sql);
     }
 
@@ -119,7 +124,7 @@ final class GenericDao implements IGenericDao
     {
         $sql = "DELETE FROM $this->tableInUse WHERE $this->primaryKeyName = $primaryKeyValue";
 
-        $this->lastQuery = $sql;
+        self::$lastQuery = $sql;
         DBConnect::getConnection()->query($sql);
     }
 
@@ -127,7 +132,7 @@ final class GenericDao implements IGenericDao
     {
         $sql = "SHOW TABLE STATUS LIKE '$this->tableInUse'";
 
-        $this->lastQuery = $sql;
+        self::$lastQuery = $sql;
         $sql = DBConnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
@@ -137,20 +142,20 @@ final class GenericDao implements IGenericDao
         }
     }
 
-    public function getLastQuery(): string
+    public static function getLastQuery(): string
     {
-        return $this->lastQuery;
+        return self::$lastQuery;
     }
 
     public function query(string $query): array
     {
         $result = array();
 
-        $this->lastQuery = $query;
+        self::$lastQuery = $sql;
         $query = DBConnect::getConnection()->query($query);
 
         if ($query->rowCount() > 0) {
-            $result = $query->fetchAll();
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
         }
 
         return $result;
