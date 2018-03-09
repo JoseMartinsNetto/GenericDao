@@ -1,12 +1,10 @@
 <?php
-<<<<<<< HEAD
 namespace GenericDaoLib;
+
+use PDO;
 
 require 'IGenericDao.php';
 require 'DBConnect.php';
-=======
-namespace MVC\Models\GenericDaoLib;
->>>>>>> 4ac6867c48e89085b7f4a7480c2e77d2ae47bfc4
 
 final class GenericDao implements IGenericDao
 {
@@ -30,7 +28,7 @@ final class GenericDao implements IGenericDao
         $sql = DBConnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
-            $item = $sql->fetch();
+            $item = $sql->fetch(PDO::FETCH_ASSOC);
         }
 
         return $item;
@@ -46,7 +44,7 @@ final class GenericDao implements IGenericDao
         $sql = DBConnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
-            $items = $sql->fetchAll();
+            $items = $sql->fetchAll(PDO::FETCH_ASSOC);
         }
 
         return $items;
@@ -68,7 +66,7 @@ final class GenericDao implements IGenericDao
         $sql = DBConnect::getConnection()->query($sql);
 
         if ($sql->rowCount() > 0) {
-            $item = $sql->fetchAll();
+            $item = $sql->fetchAll(PDO::FETCH_ASSOC);
         }
 
         return $item;
@@ -157,7 +155,7 @@ final class GenericDao implements IGenericDao
         $query = DBConnect::getConnection()->query($query);
 
         if ($query->rowCount() > 0) {
-            $result = $query->fetchAll();
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
         }
 
         return $result;
