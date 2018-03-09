@@ -1,8 +1,12 @@
 <?php
+<<<<<<< HEAD
 namespace GenericDaoLib;
 
 require 'IGenericDao.php';
 require 'DBConnect.php';
+=======
+namespace MVC\Models\GenericDaoLib;
+>>>>>>> 4ac6867c48e89085b7f4a7480c2e77d2ae47bfc4
 
 final class GenericDao implements IGenericDao
 {
@@ -76,7 +80,13 @@ final class GenericDao implements IGenericDao
         $data = array();
 
         foreach ($item as $key => $value) {
-            $data[] = " " . $key . " = '" . $value . "'";
+
+            if (is_string($value)) {
+                $data[] = " " . $key . " = '" . $value . "'";
+            } else {
+                $data[] = " " . $key . " = " . $value . " ";
+            }
+
         }
 
         $sql = $sql . implode(',', $data);
