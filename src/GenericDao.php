@@ -1,164 +1,174 @@
 <?php
 namespace GenericDaoLib;
 
-use PDO;
-
 require 'IGenericDao.php';
 require 'DBConnect.php';
 
 final class GenericDao implements IGenericDao
 {
+    
     private $tableInUse;
+    
     private $primaryKeyName;
-    private static $lastQuery;
-
-    public function __construct(string $tableInUse, string $primaryKeyName = 'id')
+    
+    private $lastQuery;
+    
+    private $primaryKeyValueIsString;
+    
+    public function __construct(string $tableInUse, string $primaryKeyName = 'id', $primaryKeyValueIsString = false)
     {
         $this->tableInUse = $tableInUse;
         $this->primaryKeyName = $primaryKeyName;
+        $this->primaryKeyValueIsString = $primaryKeyValueIsString;
     }
-
+    
     public function getItem($primaryKeyValue): array
     {
         $item = array();
-        $sql = "SELECT * FROM $this->tableInUse WHERE $this->primaryKeyName = $primaryKeyValue";
-
-        self::$lastQuery = $sql;
-
-        $sql = DBConnect::getConnection()->query($sql);
-
-        if ($sql->rowCount() > 0) {
-            $item = $sql->fetch(PDO::FETCH_ASSOC);
+        
+        if ($this->primaryKeyValueIsString) {
+            $sql = "SELECT * FROM $this->tableInUse WHERE $this->primaryKeyName = '$primaryKeyValue'";
+        } else {
+            $sql = "SELECT * FROM $this->tableInUse WHERE $this->primaryKeyName = $primaryKeyValue";
         }
-
+        
+        $this->lastQuery = $sql;
+        
+        $sql = DBConnect::getConnection()->query($sql);
+        
+        if ($sql->rowCount() > 0) {
+            $item = $sql->fetch();
+        }
+        
         return $item;
     }
-
-    public function getItems(): array
+    
+    public function getItems($limit = '', $orderBy = '', $order = ''): array
     {
-        $items = array();
-        $sql = "SELECT * FROM $this->tableInUse";
-
-        self::$lastQuery = $sql;
-
-        $sql = DBConnect::getConnection()->query($sql);
-
-        if ($sql->rowCount() > 0) {
-            $items = $sql->fetchAll(PDO::FETCH_ASSOC);
+        if(!empty($limit))
+        {
+            $limit = 'LIMIT ' . $limit;
         }
-
+        
+        if(!empty($orderBy))
+        {
+            $orderBy = 'ORDER BY ' . $orderBy;
+        }
+        
+        $items = array();
+        $sql = "SELECT * FROM $this->tableInUse $orderBy $order $limit";
+        
+        $this->lastQuery = $sql;
+        
+        $sql = DBConnect::getConnection()->query($sql);
+        
+        if ($sql->rowCount() > 0) {
+            $items = $sql->fetchAll();
+        }
+        
         return $items;
     }
-
+    
     public function getItemsLike($search, array $filds): array
     {
-
         $sql = "SELECT * FROM $this->tableInUse WHERE ";
         $data = array();
-
+        
         foreach ($filds as $fild) {
             $data[] = $fild . " LIKE '%" . $search . "%'";
         }
-
+        
         $sql = $sql . implode(' OR ', $data);
-
-        self::$lastQuery = $sql;
+        
+        $this->lastQuery = $sql;
         $sql = DBConnect::getConnection()->query($sql);
-
+        
         if ($sql->rowCount() > 0) {
-            $item = $sql->fetchAll(PDO::FETCH_ASSOC);
+            $item = $sql->fetchAll();
         }
-
+        
         return $item;
     }
-
+    
     public function addItem(array $item): void
     {
         $sql = "INSERT INTO $this->tableInUse SET";
         $data = array();
-
+        
         foreach ($item as $key => $value) {
-
-            if (is_string($value)) {
-                $data[] = " " . $key . " = '" . $value . "'";
-            } else {
-                $data[] = " " . $key . " = " . $value . " ";
-            }
-
+            $data[] = " " . $key . " = '" . $value . "'";
         }
-
+        
         $sql = $sql . implode(',', $data);
-
-        self::$lastQuery = $sql;
+        
+        $this->lastQuery = $sql;
         DBConnect::getConnection()->query($sql);
     }
-
+    
     public function updateItem(array $item): void
     {
         $primaryKeyValue = $item[$this->primaryKeyName];
-
+        
         unset($item[$this->primaryKeyName]);
-
+        
         $sql = "UPDATE $this->tableInUse SET";
         $data = array();
-
+        
         foreach ($item as $key => $value) {
-
+            
             if (is_string($value)) {
                 $data[] = " " . $key . " = '" . $value . "'";
             } else {
                 $data[] = " " . $key . " = " . $value . " ";
             }
-
         }
-
+        
         $sql = $sql . implode(',', $data);
-
+        
         $sql = $sql . " WHERE $this->primaryKeyName = " . $primaryKeyValue;
-
-        self::$lastQuery = $sql;
+        
+        $this->lastQuery = $sql;
         DBConnect::getConnection()->query($sql);
     }
-
+    
     public function removeItem($primaryKeyValue): void
     {
         $sql = "DELETE FROM $this->tableInUse WHERE $this->primaryKeyName = $primaryKeyValue";
-
-        self::$lastQuery = $sql;
+        
+        $this->lastQuery = $sql;
         DBConnect::getConnection()->query($sql);
     }
-
+    
     public function getNextId(): string
     {
         $sql = "SHOW TABLE STATUS LIKE '$this->tableInUse'";
-
-        self::$lastQuery = $sql;
+        
+        $this->lastQuery = $sql;
         $sql = DBConnect::getConnection()->query($sql);
-
+        
         if ($sql->rowCount() > 0) {
             $nextId = $sql->fetch();
             $nextId = $nextId['Auto_increment'];
             return $nextId;
         }
     }
-
-    public static function getLastQuery(): string
+    
+    public function getLastQuery(): string
     {
-        return self::$lastQuery;
+        return $this->lastQuery;
     }
-
+    
     public function query(string $query): array
     {
         $result = array();
-
-        self::$lastQuery = $sql;
+        
+        $this->lastQuery = $query;
         $query = DBConnect::getConnection()->query($query);
-
+        
         if ($query->rowCount() > 0) {
-            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            $result = $query->fetchAll();
         }
-
+        
         return $result;
     }
-
 }
