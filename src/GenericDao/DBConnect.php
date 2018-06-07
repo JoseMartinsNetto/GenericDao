@@ -1,8 +1,5 @@
 <?php
-namespace GenericDaoLib;
-
-require_once 'IDBConnect.php';
-require_once 'DBConfig.php';
+namespace Jose\GenericDao;
 
 use PDO;
 use PDOException;

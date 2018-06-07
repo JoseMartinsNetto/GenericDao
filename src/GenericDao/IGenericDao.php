@@ -1,5 +1,5 @@
 <?php
-namespace GenericDaoLib;
+namespace Jose\GenericDao;
 
 /**
  * @author José Martins <j.msantos.netto@gmail.com>

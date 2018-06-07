@@ -1,5 +1,5 @@
 <?php
-namespace GenericDaoLib;
+namespace Jose\GenericDao;
 
 use PDO;
 

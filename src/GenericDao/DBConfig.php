@@ -1,5 +1,5 @@
 <?php
-namespace GenericDaoLib;
+namespace Jose\GenericDao;
 
 /**
  * Class of constants used to configure connection of database.

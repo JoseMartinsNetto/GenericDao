@@ -1,8 +1,5 @@
 <?php
-namespace GenericDaoLib;
-
-require_once 'IGenericDao.php';
-require_once 'DBConnect.php';
+namespace Jose\GenericDao;
 
 /**
  * Library to abstract and standardize the use of PDO class
