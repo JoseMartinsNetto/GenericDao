@@ -48,7 +48,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IGenericDao::getItem()
+     * @see \Jose\GenericDao\IGenericDao::getItem()
      */
     public function getItem(string $primaryKeyValue): array
     {
@@ -73,7 +73,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IGenericDao::getItems()
+     * @see \Jose\GenericDao\IGenericDao::getItems()
      */
     public function getItems($limit = '', $orderBy = '', $order = ''): array
     {
@@ -103,7 +103,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IGenericDao::getItemsLike()
+     * @see \Jose\GenericDao\IGenericDao::getItemsLike()
      */
     public function getItemsLike(string $search, array $filds): array
     {
@@ -128,7 +128,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IGenericDao::addItem()
+     * @see \Jose\GenericDao\IGenericDao::addItem()
      */
     public function addItem(array $item): void
     {
@@ -147,7 +147,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IGenericDao::updateItem()
+     * @see \Jose\GenericDao\IGenericDao::updateItem()
      */
     public function updateItem(array $item): void
     {
@@ -177,7 +177,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IGenericDao::removeItem()
+     * @see \Jose\GenericDao\IGenericDao::removeItem()
      */
     public function removeItem(string $primaryKeyValue): void
     {
@@ -189,7 +189,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IGenericDao::getNextId()
+     * @see \Jose\GenericDao\IGenericDao::getNextId()
      */
     public function getNextId(): string
     {
@@ -207,7 +207,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IGenericDao::getLastQuery()
+     * @see \Jose\GenericDao\IGenericDao::getLastQuery()
      */
     public function getLastQuery(): string
     {
@@ -216,7 +216,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IGenericDao::query()
+     * @see \Jose\GenericDao\IGenericDao::query()
      */
     public function query(string $query): array
     {

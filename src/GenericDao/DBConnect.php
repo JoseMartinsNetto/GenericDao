@@ -26,7 +26,7 @@ class DBConnect implements IDBConnect
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IDBConnect::connect()
+     * @see \Jose\GenericDao\IDBConnect::connect()
      */
     public static function connect(): void
     {
@@ -41,7 +41,7 @@ class DBConnect implements IDBConnect
     
     /**
      * {@inheritDoc}
-     * @see \GenericDaoLib\IDBConnect::getConnection()
+     * @see \Jose\GenericDao\IDBConnect::getConnection()
      */
     public static function getConnection(): PDO
     {
