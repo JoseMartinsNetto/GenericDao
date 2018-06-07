@@ -1,18 +1,42 @@
 <?php
-namespace GenericDaoLib;
+namespace MVC\Models\GenericDaoLib;
 
-require 'IGenericDao.php';
-require 'DBConnect.php';
-
+/**
+ * Library to abstract and standardize the use of PDO class
+ * 
+ * @author José Martins <j.msantos.netto@gmail.com>
+ *
+ */
 final class GenericDao implements IGenericDao
 {
     
+    /**
+     * Variable defines the table used in queries.
+     * 
+     * @var string
+     */
     private $tableInUse;
     
+    /**
+     * Variable defines which name will be used to primary key column.
+     * 
+     * @var string
+     */
     private $primaryKeyName;
     
+    /**
+     * Stores the last query used.
+     * 
+     * @var string
+     */
     private $lastQuery;
     
+    /**
+     * Defines if primary key is string or not
+     * Used in some methods.
+     * 
+     * @var bool
+     */
     private $primaryKeyValueIsString;
     
     public function __construct(string $tableInUse, string $primaryKeyName = 'id', $primaryKeyValueIsString = false)
@@ -22,7 +46,11 @@ final class GenericDao implements IGenericDao
         $this->primaryKeyValueIsString = $primaryKeyValueIsString;
     }
     
-    public function getItem($primaryKeyValue): array
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IGenericDao::getItem()
+     */
+    public function getItem(string $primaryKeyValue): array
     {
         $item = array();
         
@@ -43,6 +71,10 @@ final class GenericDao implements IGenericDao
         return $item;
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IGenericDao::getItems()
+     */
     public function getItems($limit = '', $orderBy = '', $order = ''): array
     {
         if(!empty($limit))
@@ -69,7 +101,11 @@ final class GenericDao implements IGenericDao
         return $items;
     }
     
-    public function getItemsLike($search, array $filds): array
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IGenericDao::getItemsLike()
+     */
+    public function getItemsLike(string $search, array $filds): array
     {
         $sql = "SELECT * FROM $this->tableInUse WHERE ";
         $data = array();
@@ -90,6 +126,10 @@ final class GenericDao implements IGenericDao
         return $item;
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IGenericDao::addItem()
+     */
     public function addItem(array $item): void
     {
         $sql = "INSERT INTO $this->tableInUse SET";
@@ -105,6 +145,10 @@ final class GenericDao implements IGenericDao
         DBConnect::getConnection()->query($sql);
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IGenericDao::updateItem()
+     */
     public function updateItem(array $item): void
     {
         $primaryKeyValue = $item[$this->primaryKeyName];
@@ -131,7 +175,11 @@ final class GenericDao implements IGenericDao
         DBConnect::getConnection()->query($sql);
     }
     
-    public function removeItem($primaryKeyValue): void
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IGenericDao::removeItem()
+     */
+    public function removeItem(string $primaryKeyValue): void
     {
         $sql = "DELETE FROM $this->tableInUse WHERE $this->primaryKeyName = $primaryKeyValue";
         
@@ -139,6 +187,10 @@ final class GenericDao implements IGenericDao
         DBConnect::getConnection()->query($sql);
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IGenericDao::getNextId()
+     */
     public function getNextId(): string
     {
         $sql = "SHOW TABLE STATUS LIKE '$this->tableInUse'";
@@ -153,11 +205,19 @@ final class GenericDao implements IGenericDao
         }
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IGenericDao::getLastQuery()
+     */
     public function getLastQuery(): string
     {
         return $this->lastQuery;
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IGenericDao::query()
+     */
     public function query(string $query): array
     {
         $result = array();

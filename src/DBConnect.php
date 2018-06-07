@@ -1,17 +1,33 @@
 <?php
-namespace GenericDaoLib;
-
-require 'IDBConnect.php';
-require 'DBConfig.php';
+namespace MVC\Models\GenericDaoLib;
 
 use PDO;
 use PDOException;
 
+/**
+ * @author José Martins <j.msantos.netto@gmail.com>
+ *
+ */
 class DBConnect implements IDBConnect
 {
+    /**
+     * Stores the instance of PDO class.
+     * 
+     * @var PDO
+     */
     private static $db;
+    
+    /**
+     * Stores the Data Source Name of connection of database.
+     * 
+     * @var string
+     */
     private const DSN = DBConfig::DB_TYPE .':host=' . DBConfig::DB_HOST . ';dbname=' . DBConfig::DB_NAME;
     
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IDBConnect::connect()
+     */
     public static function connect(): void
     {
         try {
@@ -23,7 +39,11 @@ class DBConnect implements IDBConnect
         }
     }
     
-    public static function getConnection()
+    /**
+     * {@inheritDoc}
+     * @see \MVC\Models\GenericDaoLib\IDBConnect::getConnection()
+     */
+    public static function getConnection(): PDO
     {
         self::connect();
         return self::$db;
