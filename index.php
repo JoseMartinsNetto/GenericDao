@@ -1,13 +1,14 @@
 <?php
+
 /**
 * php GenericDao test file
 * run as command line for test this library
 */
 
-require 'src/GenericDao.php';
+require __DIR__ . '/vendor/autoload.php';
 
-use GenericDaoLib\GenericDao as DBExmpleDao;
+use Jose\GenericDao\GenericDao;
 
-$exempleDao = new DBExmpleDao('tests');
+$exempleDao = new GenericDao('tests');
 
 print_r($exempleDao->getItems());
