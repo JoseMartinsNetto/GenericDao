@@ -1,0 +1,21 @@
+{
+    "name": "jose_martins/generic-dao",
+    "description": "Library for Data Access Object in PDO php class",
+    "type": "Library",
+    "authors": [
+        {
+            "name": "Jose Martins",
+            "email": "j.msantos.netto@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+		"php": ">=7.2"
+	},
+	
+	"autoload": {
+		"psr-4": {"Jose\\GenericDao": "src/GenericDao"}
+	},
+	
+	"licence": "MIT"
+}
