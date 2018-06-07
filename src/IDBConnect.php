@@ -1,5 +1,5 @@
 <?php
-namespace MVC\Models\GenericDaoLib;
+namespace GenericDaoLib;
 
 use PDO;
 

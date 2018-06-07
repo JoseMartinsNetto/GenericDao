@@ -1,5 +1,5 @@
 <?php
-namespace MVC\Models\GenericDaoLib;
+namespace GenericDaoLib;
 
 /**
  * @author José Martins <j.msantos.netto@gmail.com>

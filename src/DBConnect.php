@@ -1,5 +1,8 @@
 <?php
-namespace MVC\Models\GenericDaoLib;
+namespace GenericDaoLib;
+
+require_once 'IDBConnect.php';
+require_once 'DBConfig.php';
 
 use PDO;
 use PDOException;
@@ -26,7 +29,7 @@ class DBConnect implements IDBConnect
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IDBConnect::connect()
+     * @see \GenericDaoLib\IDBConnect::connect()
      */
     public static function connect(): void
     {
@@ -41,7 +44,7 @@ class DBConnect implements IDBConnect
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IDBConnect::getConnection()
+     * @see \GenericDaoLib\IDBConnect::getConnection()
      */
     public static function getConnection(): PDO
     {

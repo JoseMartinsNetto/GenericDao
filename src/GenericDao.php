@@ -1,5 +1,8 @@
 <?php
-namespace MVC\Models\GenericDaoLib;
+namespace GenericDaoLib;
+
+require_once 'IGenericDao.php';
+require_once 'DBConnect.php';
 
 /**
  * Library to abstract and standardize the use of PDO class
@@ -48,7 +51,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IGenericDao::getItem()
+     * @see \GenericDaoLib\IGenericDao::getItem()
      */
     public function getItem(string $primaryKeyValue): array
     {
@@ -73,7 +76,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IGenericDao::getItems()
+     * @see \GenericDaoLib\IGenericDao::getItems()
      */
     public function getItems($limit = '', $orderBy = '', $order = ''): array
     {
@@ -103,7 +106,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IGenericDao::getItemsLike()
+     * @see \GenericDaoLib\IGenericDao::getItemsLike()
      */
     public function getItemsLike(string $search, array $filds): array
     {
@@ -128,7 +131,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IGenericDao::addItem()
+     * @see \GenericDaoLib\IGenericDao::addItem()
      */
     public function addItem(array $item): void
     {
@@ -147,7 +150,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IGenericDao::updateItem()
+     * @see \GenericDaoLib\IGenericDao::updateItem()
      */
     public function updateItem(array $item): void
     {
@@ -177,7 +180,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IGenericDao::removeItem()
+     * @see \GenericDaoLib\IGenericDao::removeItem()
      */
     public function removeItem(string $primaryKeyValue): void
     {
@@ -189,7 +192,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IGenericDao::getNextId()
+     * @see \GenericDaoLib\IGenericDao::getNextId()
      */
     public function getNextId(): string
     {
@@ -207,7 +210,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IGenericDao::getLastQuery()
+     * @see \GenericDaoLib\IGenericDao::getLastQuery()
      */
     public function getLastQuery(): string
     {
@@ -216,7 +219,7 @@ final class GenericDao implements IGenericDao
     
     /**
      * {@inheritDoc}
-     * @see \MVC\Models\GenericDaoLib\IGenericDao::query()
+     * @see \GenericDaoLib\IGenericDao::query()
      */
     public function query(string $query): array
     {

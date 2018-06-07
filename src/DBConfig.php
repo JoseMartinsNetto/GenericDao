@@ -1,5 +1,5 @@
 <?php
-namespace MVC\Models\GenericDaoLib;
+namespace GenericDaoLib;
 
 /**
  * Class of constants used to configure connection of database.
