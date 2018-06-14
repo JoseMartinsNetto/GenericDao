@@ -169,7 +169,11 @@ final class GenericDao implements IGenericDao
         
         $sql = $sql . implode(',', $data);
         
-        $sql = $sql . " WHERE $this->primaryKeyName = " . $primaryKeyValue;
+        if ($this->primaryKeyValueIsString) {
+            $sql = $sql . " WHERE $this->primaryKeyName = '" . $primaryKeyValue . "'";
+        } else {
+            $sql = $sql . " WHERE $this->primaryKeyName = " . $primaryKeyValue;
+        }
         
         $this->lastQuery = $sql;
         DBConnect::getConnection()->query($sql);
