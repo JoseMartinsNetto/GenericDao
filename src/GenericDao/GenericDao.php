@@ -222,15 +222,17 @@ final class GenericDao implements IGenericDao
      * {@inheritDoc}
      * @see \Jose\GenericDao\IGenericDao::query()
      */
-    public function query(string $query): array
+    public function query(string $query, bool $isFetch = false): array
     {
         $result = array();
         
         $this->lastQuery = $query;
         $query = DBConnect::getConnection()->query($query);
         
-        if ($query->rowCount() > 0) {
-            $result = $query->fetchAll();
+        if (! $isFetch) {
+            if ($query->rowCount() > 0) {
+                $result = $query->fetchAll();
+            }
         }
         
         return $result;
