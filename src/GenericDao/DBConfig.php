@@ -4,7 +4,7 @@ namespace Jose\GenericDao;
 /**
  * Class used to configure connection of database.
  *
- * @author JosÃ© Martins <j.msantos.netto@gmail.com>
+ * @author José Martins <j.msantos.netto@gmail.com>
  *        
  */
 class DBConfig implements IDBConfig

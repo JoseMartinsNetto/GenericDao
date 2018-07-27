@@ -2,6 +2,8 @@
 namespace Jose\GenericDao;
 
 /**
+ * Interface for class library GenericDao.
+ * 
  * @author José Martins <j.msantos.netto@gmail.com>
  *
  */
