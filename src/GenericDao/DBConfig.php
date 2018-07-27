@@ -2,45 +2,40 @@
 namespace Jose\GenericDao;
 
 /**
- * Class of constants used to configure connection of database.
- * 
- * @author José Martins <j.msantos.netto@gmail.com>
+ * Class used to configure connection of database.
  *
+ * @author JosÃ© Martins <j.msantos.netto@gmail.com>
+ *        
  */
-abstract class DBConfig
+class DBConfig implements IDBConfig
 {
+
     /**
-     * Defines the type of connection Ex: mysql, sqllite, etc ...
-     * 
-     * @var string
+     * Stores the config setup in setFileConfig()
+     *
+     * @var array
      */
-    const DB_TYPE = 'mysql';
-    
+    private static $dbConfig = [];
+
     /**
-     * Defines the name of database used.
-     * 
-     * @var string
+     *
+     * {@inheritdoc}
+     * @see \Jose\GenericDao\IDBConfig::getConfig()
      */
-    const DB_NAME = 'myTestDb';
-    
+    public static function setFileConfig(string $location)
+    {
+        $fileConfig = file_get_contents($location);
+
+        self::$dbConfig = json_decode($fileConfig, true);
+    }
+
     /**
-     * Defines the host of connection.
-     * 
-     * @var string
+     *
+     * {@inheritdoc}
+     * @see \Jose\GenericDao\IDBConfig::getConfig()
      */
-    const DB_HOST = 'localhost';
-    
-    /**
-     * Defines the username of conneciton.
-     * 
-     * @var string
-     */
-    const DB_USER = 'root';
-    
-    /**
-     * Defines the password of connection.
-     * 
-     * @var string
-     */
-    const DB_PASS = '';
+    public static function getConfig(): array
+    {
+        return self::$dbConfig;
+    }
 }
