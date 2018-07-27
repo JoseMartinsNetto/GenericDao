@@ -10,12 +10,15 @@
     ],
     "minimum-stability":"dev",
     "require":{
-		"php": ">=7.2"
+        "php": ">=7.2"
 	},
 	
 	"autoload":{
 		"psr-4":{"Jose\\GenericDao\\": "src/GenericDao"}
 	},
 	
-	"licence": "MIT"
+	"licence": "MIT",
+    "require-dev": {
+        "apigen/apigen": "dev-master"
+    }
 }
