@@ -4,7 +4,7 @@ namespace Jose\GenericDao;
 use PDO;
 
 /**
- * Interface for class of constants DBConnect
+ * Interface for class DBConnect.
  * 
  * @author José Martins <j.msantos.netto@gmail.com>
  *

@@ -2,7 +2,7 @@
 namespace Jose\GenericDao;
 
 /**
- * Library to abstract and standardize the use of PDO class
+ * It's library! Abstract and standardize the use of the PDO class in the context of MySql DBMS
  * 
  * @author José Martins <j.msantos.netto@gmail.com>
  *

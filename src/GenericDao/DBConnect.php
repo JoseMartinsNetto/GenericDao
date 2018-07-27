@@ -5,6 +5,8 @@ use PDO;
 use PDOException;
 
 /**
+ * The class connects the database and returns it to be used.
+ * 
  * @author José Martins <j.msantos.netto@gmail.com>
  *
  */

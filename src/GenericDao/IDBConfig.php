@@ -2,6 +2,7 @@
 namespace Jose\GenericDao;
 
 /**
+ * Interface for class DBConfig.
  *
  * @author José Martins <j.msantos.netto@gmail.com>
  *        
