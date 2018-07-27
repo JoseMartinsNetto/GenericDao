@@ -18,20 +18,17 @@ class DBConnect implements IDBConnect
     private static $db;
     
     /**
-     * Stores the Data Source Name of connection of database.
-     * 
-     * @var string
-     */
-    private const DSN = DBConfig::DB_TYPE .':host=' . DBConfig::DB_HOST . ';dbname=' . DBConfig::DB_NAME;
-    
-    /**
      * {@inheritDoc}
      * @see \Jose\GenericDao\IDBConnect::connect()
      */
     public static function connect(): void
     {
+        $dbConfig = DBConfig::getConfig();
+        
+        $dsn = $dbConfig['type'] .':host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['name'];
+        
         try {
-            self::$db = new PDO(self::DSN, DBConfig::DB_USER,  DBConfig::DB_PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            self::$db = new PDO($dsn, $dbConfig['user'],  $dbConfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $error) {

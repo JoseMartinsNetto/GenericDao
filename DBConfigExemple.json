@@ -1,0 +1,7 @@
+{
+    "type": "mysql",
+    "name": "myTestDb",
+    "host": "localhost",
+    "user": "root",
+    "password": ""
+}
