@@ -38,6 +38,6 @@ Feito isso agora basta importar a classe principal **GenericDao** e passar no co
 O construtor também conta com dois parâmetros adicionais: o primeiro é uma **string $primaryKeyName** que conta com o valor padrão **'id'** (aqui fica o nome do campo que você definiu como PRIMARY KEY na construção da tabela), e um **bool $primaryKeyValueIsString** com o valor padrão **false** (aqui você define se o valor da chave primária é uma string ou não);
 Dada a explicação inicial segue abaixo o restante da documentação nas seguintes seções:
 
-[2- Obtendo dados](https://github.com/jmsantosnetto/GenericDao/blob/master/docs-pt/obtendo-dados.md)
-[3- Gravando dados](https://github.com/jmsantosnetto/GenericDao/blob/master/docs-pt/gravando-dados.md)
+[2- Obtendo dados](https://github.com/jmsantosnetto/GenericDao/blob/master/docs-pt/obtendo-dados.md)  
+[3- Gravando dados](https://github.com/jmsantosnetto/GenericDao/blob/master/docs-pt/gravando-dados.md)  
 [4- Excluindo dados](https://github.com/jmsantosnetto/GenericDao/blob/master/docs-pt/excluindo-dados.md)
