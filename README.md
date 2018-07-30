@@ -1,42 +1,43 @@
 # GenericDao
+
 Biblioteca para acesso ao banco de dados MySQL baseado na classe PDO em PHP!
+Library for access to the MySQL database based on the PDO class in PHP!
+
+[English documents!](https://github.com/jmsantosnetto/GenericDao/blob/master/docs-en/Readme.md)
 
 ### 1 - Uso básico
+**Espero que esteja utilizando o padrão de autoload psr-4, pois é uma exigência para usar essa biblioteca.**
+Para usar a biblioteca você precisará de um arquivo de configuração no formato JSON, seguindo a seguinte estrutura:
 
-Para usar a biblioteca você precisará apenas de um arquivo onde esteja definido os dados de acesso 
-para o seu banco de dados em uma variável global exemplo:
+	{
+		"type": "tipo da conexão pode ser mysql, sqlite...", // por enquanto o tipo suportado é somente mysql
+		"name": "nome da base de dados",
+		"host": "host de conexão ex: localhost",
+		"user": "usuário da base de dados ex: root",
+		"password": "senha da base de dados"
+	}
+
+Junto ao repositório existe um arquivo de exemplo chamado DBConfigExemple.json, você pode usá-lo como referência.
+Agora precisamos configurar este arquivo em algum lugar!
+O local em questão não importa, contando que importe a Classe **DBConfig do namespace:  Jose\GenericDao\DBConfig** usando o méetodo estático **setConfigFile()**, passando como parâmetro a localização do arquivo ex:	
 
 	<?php
+	//importando a classe de configuração
+	use Jose\GenericDao\DBConfig;
+	
+	DBConfig::setConfigFile(__DIR__ . 'DBConfig.json');
 
-	global $dbConfig;
-	$dbConfig = array();
+Feito isso agora basta importar a classe principal **GenericDao** e passar no construtor uma string com o nome da tabela que será usado no momento ex:
 
-	$dbConfig['dbName'] = '********';
-	$dbConfig['dbHost'] = '********';
-	$dbConfig['dbUser'] = '********';
-	$dbConfig['dbPass'] = '********';
+	<?php
+	//importando a classe principal
+	use Jose\GenericDao\GenericDao;
+	
+	$tableDao = new GenericDao('myTable');
 
-junto ao repositório já contem um arquivo de exemplo importado junto a classe para facilitar a integração.
+O construtor também conta com dois parâmetros adicionais: o primeiro é uma **string $primaryKeyName** que conta com o valor padrão **'id'** (aqui fica o nome do campo que você definiu como PRIMARY KEY na construção da tabela), e um **bool $primaryKeyValueIsString** com o valor padrão **false** (aqui você define se o valor da chave primária é uma string ou não);
+Dada a explicação inicial segue abaixo o restante da documentação nas seguintes seções:
 
-Depois de definido as configurações de acesso ao banco, você pode instanciar a classe  
-passando como argumento obrigatório a tabela em que irá ter acesso no momento:
-
-	$myDb = new GenericDao('myTable');
-
-O construtor também conta com mais dois parametros opcionais que são $pkName(primary Key da tabela) e $dbName nome da base de dados caso trabalhe com mais de um banco de dados com a mesma conexão.  
-**CASO ESSES PARÂMETROS NÃO FOREM INFORMADOS NA CONSTRUÇÃO DA CLASSE, SERÁ USADO COMO PADRÃO PARA $pkName o valor 'id' E PARA O $dbName O VALOR $dbConfig['dbName'] = 'MyDbNameExemple' DEFINIDO NO ARQUIVO DE CONFIGURAÇÃO EM: config.genericDao.php.**
-
-Dessa forma, para se instanciar a classe, ficaria dessa forma:
-
-	$myDb = new GenericDao('myTable', 'myPkName', 'myAnotherDb');
-
-_Veja Também:_  
- 
-### 2 -  Métodos de persistencia
-
-[Obtendo dados](docs/obtendo-itens.md)  
-[Atualizando dados](docs/atualizando-itens.md)  
-[Deletando dados](docs/deletando-itens.md)  
-
-
-**RESTANTE DA DOCUMENTAÇÃO AINDA EM PRODUÇÃO...**
+[2- Obtendo dados](https://github.com/jmsantosnetto/GenericDao/blob/master/docs-pt/obtendo-dados.md)
+[3- Gravando dados](https://github.com/jmsantosnetto/GenericDao/blob/master/docs-pt/gravando-dados.md)
+[4- Excluindo dados](https://github.com/jmsantosnetto/GenericDao/blob/master/docs-pt/excluindo-dados.md)
